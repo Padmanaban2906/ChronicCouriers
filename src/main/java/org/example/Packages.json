@@ -4,7 +4,7 @@
     "priority": "STANDARD",
     "deadline": 1700000000000,
     "orderTime": 1555550000000,
-    "isFragile": false
+    "fragile": false
   },
   {
     "id": 1002,

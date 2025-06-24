@@ -11,13 +11,22 @@ public class ChronosCouriers {
     public static void main(String[] args) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
 
-        File ridersFile = new File("Riders.json");
+        File ridersFile = new File("/Users/mnvspd/ChronicCouriers/ChronosCouriers/src/main/java/org/example/Riders.json");
         List<Rider> riders = objectMapper.readValue(ridersFile, new TypeReference<List<Rider>>() {});
 
 
-        File packagesFile = new File("Packages.json");
+        File packagesFile = new File("/Users/mnvspd/ChronicCouriers/ChronosCouriers/src/main/java/org/example/Packages.json");
         List<Package> packages = objectMapper.readValue(packagesFile, new TypeReference<List<Package>>() {});
 
+        DispatchCenter dsp = new DispatchCenter();
+
+        for (Rider rider : riders) {
+            dsp.addRiderDetails(rider);
+        }
+
+        for (Package pkg : packages){
+            dsp.setPackages(pkg);
+        }
 
 
     }

@@ -1,8 +1,10 @@
 package org.example;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
-@Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Package {
     private int id;
     private PackagePriority priority;
@@ -60,6 +62,6 @@ public class Package {
     }
 
     public void setFragile(boolean fragile) {
-        isFragile = fragile;
+        this.isFragile = fragile;
     }
 }

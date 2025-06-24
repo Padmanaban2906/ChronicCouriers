@@ -2,13 +2,15 @@
   {
     "id": 1001,
     "priority": "STANDARD",
+    "location" : "Chennai",
     "deadline": 1700000000000,
     "orderTime": 1555550000000,
-    "fragile": false
+    "isFragile": true
   },
   {
     "id": 1002,
     "priority": "STANDARD",
+    "location" : "Bangalore",
     "deadline": 1700000500000,
     "orderTime": 1588880500000,
     "isFragile": true
@@ -16,6 +18,7 @@
   {
     "id": 1003,
     "priority": "STANDARD",
+    "location" : "Trichy",
     "deadline": 1700000500000,
     "orderTime": 1599990500000,
     "isFragile": true
@@ -23,7 +26,15 @@
   {
     "id": 1004,
     "priority": "EXPRESS",
+    "location" : "Chennai",
     "deadline": 1700000000000,
+    "orderTime": 1699990500000,
+    "isFragile": true
+  }, {
+    "id": 1005,
+    "priority": "EXPRESS",
+    "location" : "Chennai",
+    "deadline": 1699999999999,
     "orderTime": 1699990500000,
     "isFragile": true
   }

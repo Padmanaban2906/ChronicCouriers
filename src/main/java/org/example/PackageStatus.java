@@ -1,5 +1,5 @@
 package org.example;
 
 enum PackageStatus {
-    PENDING, ASSIGNED, IN_TRANSIT, DELIVERED, CANCELLED
+    PENDING, ASSIGNED, IN_TRANSIT, DELIVERED
 }

@@ -7,6 +7,7 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Package {
     private int id;
+    private String location;
     private PackagePriority priority;
     private long deadline;
     private long orderTime;
@@ -27,6 +28,14 @@ public class Package {
 
     public PackagePriority getPriority() {
         return priority;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public void setPriority(PackagePriority priority) {

@@ -2,13 +2,15 @@ package org.example;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import exception.PackageNotFoundException;
+import exception.RiderNotFoundException;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 public class ChronosCouriers {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, RiderNotFoundException, PackageNotFoundException {
         ObjectMapper objectMapper = new ObjectMapper();
 
         File ridersFile = new File("/Users/mnvspd/ChronicCouriers/ChronosCouriers/src/main/java/org/example/Riders.json");
@@ -27,6 +29,8 @@ public class ChronosCouriers {
         for (Package pkg : packages){
             dsp.setPackages(pkg);
         }
+
+        dsp.assignPackageToRider();
 
 
     }

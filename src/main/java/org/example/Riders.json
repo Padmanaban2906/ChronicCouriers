@@ -9,11 +9,11 @@
     "reliabilityRating" : 4.2
   }, {
     "id" : 3,
-    "location" : "Trichy",
+    "location" : "Chennai",
     "reliabilityRating" : 4.7
   }, {
     "id" : 4,
-    "location" : "Chennai",
-    "reliabilityRating" : 4.6
+    "location" : "Trichy",
+    "reliabilityRating" : 4.9
   }
 ]

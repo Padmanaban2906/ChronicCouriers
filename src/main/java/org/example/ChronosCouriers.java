@@ -8,6 +8,7 @@ import exception.RiderNotFoundException;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.PriorityQueue;
 
 public class ChronosCouriers {
     public static void main(String[] args) throws IOException, RiderNotFoundException, PackageNotFoundException {
@@ -30,8 +31,15 @@ public class ChronosCouriers {
             dsp.setPackages(pkg);
         }
 
-        dsp.assignPackageToRider();
-
-
+        PriorityQueue<Package> packageQueue = dsp.assignPackageToRider();
+        while (!packageQueue.isEmpty()) {
+            boolean availabilityChk = dsp.availabilityChk();
+            if(availabilityChk){
+                dsp.assignPackageToRider();
+                dsp.deliveryCompletionStatus();
+            } else {
+                dsp.deliveryCompletionStatus();
+            }
+        }
     }
 }

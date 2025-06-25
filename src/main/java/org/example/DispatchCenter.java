@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class DispatchCenter {
@@ -13,8 +14,9 @@ public class DispatchCenter {
 
     private Map<Integer, Rider> riders = new HashMap<>();
     private Map<Integer, Package> packages = new HashMap<>();
-
+    private Map<Integer, Package> riderMappingDet = new LinkedHashMap<>();
     private PriorityQueue<Package> packageQueue = new PriorityQueue<>(new PackageComparator());
+    private List<Package> delivered = new ArrayList<>();
 
     public void addRiderDetails(Rider rider) {
         riders.put(rider.getId(), rider);
@@ -28,7 +30,7 @@ public class DispatchCenter {
     }
 
 
-    public void assignPackageToRider() throws RiderNotFoundException, PackageNotFoundException {
+    public PriorityQueue<Package> assignPackageToRider() throws RiderNotFoundException, PackageNotFoundException {
         if (packageQueue.isEmpty()) {
             throw new PackageNotFoundException("Packages not found");
         }
@@ -63,12 +65,35 @@ public class DispatchCenter {
         }
         riders = sortedRiders;
         packageQueue.addAll(unassignedPkg);
+        return packageQueue;
     }
 
     private void updateRiderAndPackageStatus(Rider rider, Package pkg) {
         rider.setStatus(RiderStatus.BUSY);
         pkg.setStatus(PackageStatus.ASSIGNED);
+        riderMappingDet.put(rider.getId(), pkg);
+        delivered.add(pkg);
         logger.info("Package {} assigned to Rider {}", pkg.getId(), rider.getId());
     }
 
+    public void deliveryCompletionStatus() {
+        riderMappingDet.entrySet().forEach(ridPkg -> {
+            if(!delivered.isEmpty()) {
+                Rider rider = riders.get(ridPkg.getKey());
+                rider.setStatus(RiderStatus.AVAILABLE);
+                riders.replace(ridPkg.getKey(), rider);
+                delivered.getFirst().setStatus(PackageStatus.DELIVERED);
+                logger.info("Package {} has been delivered successfully by the Rider {}", delivered.getFirst().getId(), rider.getId());
+                delivered = delivered.stream()
+                        .filter(i -> i.getStatus() != PackageStatus.DELIVERED).collect(Collectors.toList());
+            }
+        });
+    }
+
+    public boolean availabilityChk() {
+        for (Package pkg : packageQueue) {
+            return riders.entrySet().stream().anyMatch(i -> i.getValue().getStatus() == RiderStatus.AVAILABLE && i.getValue().getLocation().equals(pkg.getLocation()));
+        }
+        return false;
+    }
 }

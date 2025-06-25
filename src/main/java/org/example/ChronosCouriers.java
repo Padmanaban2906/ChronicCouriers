@@ -2,8 +2,11 @@ package org.example;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import exception.PackageNotFoundException;
-import exception.RiderNotFoundException;
+import org.example.exception.PackageNotFoundException;
+import org.example.exception.RiderNotFoundException;
+import org.example.models.Package;
+import org.example.models.Rider;
+import org.example.service.DispatchCenter;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,15 +22,21 @@ public class ChronosCouriers {
 
 
         File packagesFile = new File("/Users/mnvspd/ChronicCouriers/ChronosCouriers/src/main/java/org/example/Packages.json");
-        List<Package> packages = objectMapper.readValue(packagesFile, new TypeReference<List<Package>>() {});
+        List<org.example.models.Package> packages = objectMapper.readValue(packagesFile, new TypeReference<List<org.example.models.Package>>() {});
 
+        if (packages.isEmpty()) {
+            throw new PackageNotFoundException("Packages not found");
+        }
+        if (riders.isEmpty()) {
+            throw new RiderNotFoundException("Riders not found ");
+        }
         DispatchCenter dsp = new DispatchCenter();
 
         for (Rider rider : riders) {
             dsp.addRiderDetails(rider);
         }
 
-        for (Package pkg : packages){
+        for (org.example.models.Package pkg : packages){
             dsp.setPackages(pkg);
         }
 

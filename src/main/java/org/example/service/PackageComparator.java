@@ -1,4 +1,8 @@
-package org.example;
+package org.example.service;
+
+import org.example.models.Package;
+import org.example.models.PackagePriority;
+
 
 import java.util.Comparator;
 

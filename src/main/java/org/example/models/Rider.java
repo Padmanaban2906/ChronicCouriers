@@ -1,6 +1,4 @@
-package org.example;
-
-import java.util.List;
+package org.example.models;
 
 public class Rider {
     private int id;

@@ -1,12 +1,15 @@
-package org.example;
+package org.example.service;
 
-import exception.PackageNotFoundException;
-import exception.RiderNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.example.models.Package;
+
+import org.example.models.PackageStatus;
+import org.example.models.Rider;
+import org.example.models.RiderStatus;
+
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class DispatchCenter {
@@ -30,13 +33,7 @@ public class DispatchCenter {
     }
 
 
-    public PriorityQueue<Package> assignPackageToRider() throws RiderNotFoundException, PackageNotFoundException {
-        if (packageQueue.isEmpty()) {
-            throw new PackageNotFoundException("Packages not found");
-        }
-        if (riders.isEmpty()) {
-            throw new RiderNotFoundException("Riders not found ");
-        }
+    public PriorityQueue<Package> assignPackageToRider() {
         Map<Integer, Rider> sortedRiders = riders.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.comparingDouble(Rider::getReliabilityRating).reversed()))
                 .collect(Collectors.toMap(

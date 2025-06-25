@@ -15,13 +15,24 @@ import java.util.PriorityQueue;
 
 public class ChronosCouriers {
     public static void main(String[] args) throws IOException, RiderNotFoundException, PackageNotFoundException {
+        if (args.length < 2) {
+            System.out.println("Usage: java ChronosCouriers <packages_file_path> <riders_file_path>");
+            System.exit(1);
+        }
+
+        File packagesFile = new File(args[0]);
+        File ridersFile = new File(args[1]);
+
+        if (!packagesFile.exists() || !ridersFile.exists()) {
+            System.out.println("Error: One or both files do not exist!");
+            System.exit(1);
+        }
+
+
         ObjectMapper objectMapper = new ObjectMapper();
 
-        File ridersFile = new File("/Users/mnvspd/ChronicCouriers/ChronosCouriers/src/main/java/org/example/Riders.json");
         List<Rider> riders = objectMapper.readValue(ridersFile, new TypeReference<List<Rider>>() {});
 
-
-        File packagesFile = new File("/Users/mnvspd/ChronicCouriers/ChronosCouriers/src/main/java/org/example/Packages.json");
         List<org.example.models.Package> packages = objectMapper.readValue(packagesFile, new TypeReference<List<org.example.models.Package>>() {});
 
         if (packages.isEmpty()) {

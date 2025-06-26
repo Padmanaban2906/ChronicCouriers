@@ -15,19 +15,12 @@ import java.util.PriorityQueue;
 
 public class ChronosCouriers {
     public static void main(String[] args) throws IOException, RiderNotFoundException, PackageNotFoundException {
-        if (args.length < 2) {
-            System.out.println("Usage: java ChronosCouriers <packages_file_path> <riders_file_path>");
-            System.exit(1);
+        if (args.length < 2 || args[0].isEmpty() || args[1].isEmpty()) {
+            throw new IllegalArgumentException("Usage: java ChronosCouriers <packages_file_path> <riders_file_path>");
         }
 
         File packagesFile = new File(args[0]);
         File ridersFile = new File(args[1]);
-
-        if (!packagesFile.exists() || !ridersFile.exists()) {
-            System.out.println("Error: One or both files do not exist!");
-            System.exit(1);
-        }
-
 
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -43,12 +36,32 @@ public class ChronosCouriers {
         }
         DispatchCenter dsp = new DispatchCenter();
 
+        boolean allRidersEmpty = true;
         for (Rider rider : riders) {
-            dsp.addRiderDetails(rider);
+            if(!rider.getLocation().isEmpty()){
+                dsp.addRiderDetails(rider);
+                allRidersEmpty = false;
+            } else {
+                System.out.println("Rider location is empty for the ID : " + rider.getId() + " ,Hence we're skipping the details of the rider");
+            }
         }
 
-        for (org.example.models.Package pkg : packages){
-            dsp.setPackages(pkg);
+        if (allRidersEmpty) {
+            throw new RiderNotFoundException("All riders have empty locations");
+        }
+
+        boolean allPackagesEmpty = true;
+        for (Package pkg : packages){
+            if(!pkg.getLocation().isEmpty()) {
+                dsp.setPackages(pkg);
+                allPackagesEmpty = false;
+            } else {
+                System.out.println("Package location is empty for the ID : " + pkg.getId() + ". Currently we're skipping the details of the package meanwhile please check customer and add the details of the location");
+            }
+        }
+
+        if (allPackagesEmpty) {
+            throw new PackageNotFoundException("All packages have empty locations");
         }
 
         PriorityQueue<Package> packageQueue = dsp.assignPackageToRider();

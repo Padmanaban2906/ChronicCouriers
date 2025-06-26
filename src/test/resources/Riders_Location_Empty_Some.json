@@ -1,0 +1,11 @@
+[
+  {
+    "id" : 1,
+    "location" : "Chennai",
+    "reliabilityRating" : 4.8
+  },{
+  "id" : 2,
+  "location" : "",
+  "reliabilityRating" : 4.2
+}
+]

@@ -79,8 +79,8 @@ public class DispatchCenter {
                 Rider rider = riders.get(ridPkg.getKey());
                 rider.setStatus(RiderStatus.AVAILABLE);
                 riders.replace(ridPkg.getKey(), rider);
-                delivered.getFirst().setStatus(PackageStatus.DELIVERED);
-                logger.info("Package {} has been delivered successfully by the Rider {}", delivered.getFirst().getId(), rider.getId());
+                delivered.get(0).setStatus(PackageStatus.DELIVERED);
+                logger.info("Package {} has been delivered successfully by the Rider {}", delivered.get(0).getId(), rider.getId());
                 delivered = delivered.stream()
                         .filter(i -> i.getStatus() != PackageStatus.DELIVERED).collect(Collectors.toList());
             }
